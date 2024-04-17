@@ -122,14 +122,12 @@ public class staffBulkImportTest {
 
 		faker = new Faker();
 
-	
-
 		for (Integer id : teacher.getStaffIds()) {
-			
+
 			payload = new StaffCreatePojo();
 
 			payload.setFirstName(faker.name().firstName());
-			
+
 			Date dob = faker.date().birthday();
 
 			// Format the date of birth
@@ -146,7 +144,8 @@ public class staffBulkImportTest {
 			payload.setDob(formattedDob);
 			payload.setUserName(faker.name().username());
 			payload.setPassword(faker.internet().password());
-			payload.setSubjectIds(faker.number().digits(1) + "," + faker.number().digits(1)); // Example for generating two
+			payload.setSubjectIds(faker.number().digits(1) + "," + faker.number().digits(1)); // Example for generating
+																								// two
 																								// subject IDs
 			payload.setTeacherCode(faker.code().isbn10());
 			payload.setAppointmentDate(formattedDob);
@@ -154,8 +153,10 @@ public class staffBulkImportTest {
 			payload.setEmploymentType(faker.options().option("permanent", "temporary")); // Example for generating
 																							// employment
 																							// type
-			payload.setMartialStatus(faker.options().option("single", "married")); // Example for generating martial status
-			payload.setBloodGroup(faker.options().option("A+", "B+", "AB+", "O+")); // Example for generating blood group
+			payload.setMartialStatus(faker.options().option("single", "married")); // Example for generating martial
+																					// status
+			payload.setBloodGroup(faker.options().option("A+", "B+", "AB+", "O+")); // Example for generating blood
+																					// group
 			payload.setMotherTongue(faker.nation().language());
 			payload.setIsSamePresentAddress(faker.number().numberBetween(0, 1));
 			payload.setIsActive(1); // Assuming isActive is always set to 1
@@ -214,14 +215,13 @@ public class staffBulkImportTest {
 			avatarInfo.setPath(this.payload.getTeacherFile_path());
 			payload.setAvatarInfo(avatarInfo);
 
-
 			Response response = StaffBulkImportEndPoints.updateStaff(id, payload);
 
-		//	response.then().log().body();
+			// response.then().log().body();
 
 			String message = response.jsonPath().getString("message");
 			System.out.println("message: " + message);
-			
+
 			String firstName = response.jsonPath().getString("data.firstName");
 			System.out.println("teacher firstName " + id + ": " + firstName);
 

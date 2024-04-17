@@ -38,19 +38,35 @@ public class Routes {
 
 	// Staff Bulk Import
 
-	public static String Upload_FileTeacher_URL = Base_URL + "/teacher/upload-staff-details";//?path=staff-management/imports/
+	public static String Upload_FileTeacher_URL = Base_URL + "/teacher/upload-staff-details";// ?path=staff-management/imports/
 
-	public static String ViewFile_Teacher_URL = Base_URL + "/teacher/view-staff-file-info";//?fileName={{Bulk_fileName}}&filePath={{Bulk_filePath}}
+	public static String ViewFile_Teacher_URL = Base_URL + "/teacher/view-staff-file-info";// ?fileName={{Bulk_fileName}}&filePath={{Bulk_filePath}}
 
 	public static String ImportStaff_URL = Base_URL + "/teacher/import-teacher";
-	
+
 	public static String getStaffBulk_URL = Base_URL + "/teacher/get-teacher/{StaffId}";
 
 	public static String UpdateStaffBulk_URL = Base_URL + "/teacher/update-teacher/{StaffId}";
 
 	public static String DeleteStaffBulk_URL = Base_URL + "/teacher/delete-teacher/{StaffId}";// {userId}
 	
+	//Marks URL 
 	
-	
+	public static String GetExam_URL = Base_URL + "/exam-report/exam-report-subject-list";// ? //gradeId=3&sectionId=1&examId=4&type=2
 
+	public static String DownloadFile_URL = Base_URL + "/exam-report/upload-bulk";
+
+	public static String MarkUpload_URL = Base_URL + "/exam-report/upload-exam-report";
+
+	public static String Excelinfo_URL = Base_URL + "/exam-report/view-subjects-info" ; //?gradeId={{gradeId}}&sectionId={{sectionId}}&fileName={{fileName}}&filePath={{filePath}}";
+
+	public static String BulkMarkImport_URL = Base_URL + "/exam-report/bulk-exam-report";
+
+	public static String GetSubjectlist_URL = Base_URL + "/exam-report/exam-report-subject-list?gradeId={{gradeId}}&sectionId={{sectionId}}&examId={{examId}}&type={{type}}";// {userId}
+   
+
+	public static String ExamDetails_URL = Base_URL + "/exam-report/get-exam-report/{{reportId}}";
+
+	public static String DeleteMarks_URL = Base_URL + "/exam-report/delete-student-exam-report/{{ExamMarksId}}";// {userId}
+	
 }

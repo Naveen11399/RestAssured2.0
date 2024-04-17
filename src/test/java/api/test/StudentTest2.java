@@ -22,8 +22,6 @@ public class StudentTest2 {
 
 	studentInfo studentPesonal;
 
-
-
 	@Test(priority = 1)
 	public void createStudentApi() throws JsonProcessingException {
 

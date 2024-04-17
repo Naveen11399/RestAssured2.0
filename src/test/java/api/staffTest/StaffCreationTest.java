@@ -207,10 +207,9 @@ public class StaffCreationTest {
 		Response response = StaffCreate.CreateStaff_UI(payload);
 
 //		response.then().log().body();
-		
+
 		String message = response.jsonPath().getString("message");
 		System.out.println("message: " + message);
-
 
 		String staffId = response.jsonPath().getString("data.id");
 
@@ -228,12 +227,10 @@ public class StaffCreationTest {
 		Response response = StaffCreate.getStaff(this.payload.getTeacherID());
 
 		assertEquals(payload.getStaffName(), response.jsonPath().getString("data.firstName"));
-		
-		
+
 		String message = response.jsonPath().getString("message");
 		System.out.println("message: " + message);
 
-		
 //		response.then().log().body();
 //		System.out.println("Response: " + response.asString());
 	}
@@ -248,21 +245,21 @@ public class StaffCreationTest {
 		Response response = StaffCreate.updateStaff(payload.getTeacherID(), payload);
 
 //		response.then().log().body();
-		
-		
+
 		String message = response.jsonPath().getString("message");
 		System.out.println("message: " + message);
-		
-		//assertEquals(payload.getStaffName(), response.jsonPath().getString("data.firstName"));
 
+		// assertEquals(payload.getStaffName(),
+		// response.jsonPath().getString("data.firstName"));
 
 	}
 
 	@Test(priority = 7)
 	public void deleteStaff() {
 		Response response = StaffCreate.deleteStaff(payload.getTeacherID());
-		
-		//assertEquals(payload.getStaffName(), response.jsonPath().getString("data.firstName"));
+
+		// assertEquals(payload.getStaffName(),
+		// response.jsonPath().getString("data.firstName"));
 		String message = response.jsonPath().getString("message");
 		System.out.println("message: " + message);
 

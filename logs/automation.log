@@ -116,3 +116,10 @@
 16:38:23.882 [main] INFO  api.test.StdBulkImportTest - Data Driven Tesing Ended
 16:38:23.885 [main] INFO  api.test.StdBulkImportTest - viewFileInfo Testing Started
 16:38:26.654 [main] INFO  api.test.StdBulkImportTest - viewFileInfo Testing Ended
+15:28:46.529 [main] INFO  api.test.StdBulkImportTest - Data Driven Tesing Started
+15:29:57.617 [main] INFO  api.test.StdBulkImportTest - Data Driven Tesing Started
+15:30:05.985 [main] INFO  api.test.StdBulkImportTest - Data Driven Tesing Ended
+15:30:05.992 [main] INFO  api.test.StdBulkImportTest - Data Driven Tesing Started
+15:30:11.513 [main] INFO  api.test.StdBulkImportTest - Data Driven Tesing Ended
+15:30:11.518 [main] INFO  api.test.StdBulkImportTest - viewFileInfo Testing Started
+15:30:18.567 [main] INFO  api.test.StdBulkImportTest - viewFileInfo Testing Ended

@@ -61,12 +61,9 @@ public class StudentTest {
 
 		String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(create_Std);
 
-		
-
 		Response response = StudentEndPoints.createStudent(create_Std);
 
-
-		//System.out.println("Response: " + response.asString());
+		// System.out.println("Response: " + response.asString());
 
 		String message = response.jsonPath().getString("message");
 		System.out.println("message: " + message);
@@ -75,7 +72,7 @@ public class StudentTest {
 		System.out.println("name: " + name);
 
 		String studentId = response.jsonPath().getString("data.id");
-		//System.out.println("studentId: " + studentId);
+		// System.out.println("studentId: " + studentId);
 
 		studentPesonal.setStudentId(studentId);
 		create_Std.setStudentInfo(studentPesonal);
@@ -85,11 +82,10 @@ public class StudentTest {
 	public void getCreatedStudentInfo() {
 
 		Response response = StudentEndPoints.getCreatedStudent(this.studentPesonal.getStudentId());
-		//response.then().log().all();
+		// response.then().log().all();
 		// System.out.println("Response: " + response.asString());
 		String message = response.jsonPath().getString("message");
 		System.out.println("message: " + message);
-
 
 	}
 
@@ -97,18 +93,14 @@ public class StudentTest {
 	public void deleteStudentInfo() {
 
 		Response response = StudentEndPoints.deleteStudent(this.studentPesonal.getStudentId());
-		
-		response.then()
-		.assertThat()
-		.statusCode(200);
+
+		response.then().assertThat().statusCode(200);
 
 		String message = response.jsonPath().getString("message");
 		System.out.println("message: " + message);
-		
-		//response.then().log().all();
+
+		// response.then().log().all();
 		// System.out.println("Response: " + response.asString());
 	}
 
-	
-	
 }

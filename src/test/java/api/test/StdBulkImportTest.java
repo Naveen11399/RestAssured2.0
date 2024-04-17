@@ -18,13 +18,11 @@ import api.utilities.DataProviders;
 import io.restassured.response.Response;
 
 public class StdBulkImportTest {
-	
-
 
 	StdImportPojo studentPayload;
-    
-	public Logger log=LogManager.getLogger(this.getClass());
-	
+
+	public Logger log = LogManager.getLogger(this.getClass());
+
 	@Test(dataProvider = "StdBulk", dataProviderClass = DataProviders.class, priority = 1)
 	public void testDataFromExcel(String admissionNumber, String admissionDate, String studentName, String gender,
 			String dob, String grade, String section, String aadharNumber, String studentEmail, String studentContactNo,
@@ -40,16 +38,12 @@ public class StdBulkImportTest {
 			String guardianQualification, String guardianIncome, String guardianOccupation, String guardianDesignation,
 			String guardianCompanyName, String guardianAadharNo, String guardianPassportNo,
 			String guardianCompanyAddress, String communication) {
-		
+
 		log.info("Data Driven Tesing Started");
 
-
-
-
 		Response response = StudentEndPoints.createBulkStudent();
-		
-		response.then().log().body();
 
+//	
 		String path = response.jsonPath().get("data.path");
 
 		String fileName = response.jsonPath().get("data.name");
@@ -58,17 +52,17 @@ public class StdBulkImportTest {
 		studentPayload.setFileName(fileName);
 		studentPayload.setPath(path);
 
-		
 		log.info("Data Driven Tesing Ended");
 
 	}
 
 	@Test(priority = 2)
 	public void viewFileInfo() throws JsonProcessingException {
-		
+
 		log.info("viewFileInfo Testing Started");
 
-		Response response = StudentEndPoints.viewFileInfo(this.studentPayload.getFileName(), this.studentPayload.getPath());
+		Response response = StudentEndPoints.viewFileInfo(this.studentPayload.getFileName(),
+				this.studentPayload.getPath());
 
 		ArrayList<LinkedHashMap<String, Object>> reportDetailsList = response.jsonPath().get("data.reportDetails");
 
@@ -86,11 +80,8 @@ public class StdBulkImportTest {
 
 		String jsonArrayString = jsonArray.toString();
 
-
-	
-
 		studentPayload.setStudentDetails(jsonArrayString);
-		
+
 		log.info("viewFileInfo Testing Ended");
 
 	}
@@ -100,8 +91,6 @@ public class StdBulkImportTest {
 
 		Response response = StudentEndPoints.UploadStudent(studentPayload);
 
-	
-
 		String id = response.jsonPath().getString("data[0].id");
 
 		// Extracting the firstName
@@ -109,8 +98,6 @@ public class StdBulkImportTest {
 
 		String id1 = response.jsonPath().getString("data[1].id");
 		String Name1 = response.jsonPath().getString("data[1].firstName");
-
-
 
 		List<Integer> ids = response.jsonPath().getList("data.id");
 		System.out.println("IDs: " + ids);
@@ -121,18 +108,18 @@ public class StdBulkImportTest {
 
 		studentPayload.setStudentId(ids);
 		studentPayload.setStudentName(firstNames);
-		
 
 	}
 
 	@Test(priority = 4)
 	public void getBulkStudentInfo() {
 		// Single User
-		// Response response = StudentEndPoints.getBulkStudent(this.studentPayload.getStudentId());
+		// Response response =
+		// StudentEndPoints.getBulkStudent(this.studentPayload.getStudentId());
 
 		for (Integer id : this.studentPayload.getStudentId()) {
 			Response response = StudentEndPoints.getBulkStudent(id);
-			//response.then().log().all();
+			// response.then().log().all();
 			String name = response.jsonPath().getString("data.studentInfo.name");
 			System.out.println("name: " + name);
 			String message = response.jsonPath().getString("message");
@@ -146,13 +133,14 @@ public class StdBulkImportTest {
 	public void deleteBulkStudent() {
 
 		// Single User
-		// Response response = StudentEndPoints.deleteBulkStudent(this.studentPayload.getStudentId());
+		// Response response =
+		// StudentEndPoints.deleteBulkStudent(this.studentPayload.getStudentId());
 
 		for (Integer id : this.studentPayload.getStudentId()) {
 
 			Response response = StudentEndPoints.deleteBulkStudent(id);
-		
-		    String message = response.jsonPath().getString("message");
+
+			String message = response.jsonPath().getString("message");
 			System.out.println("Message for student ID " + id + ": " + message);
 			// response.then().log().all();
 

@@ -10,6 +10,8 @@
 			<class name="api.test.StudentTest2" />
 			<class name="api.test.StdBulkImportTest" />
 			<class name="api.staffTest.StaffCreationTest" />
+			<class name="api.staffTest.staffBulkImportTest" />
+			
 
 		</classes>
 	</test> <!-- Test -->

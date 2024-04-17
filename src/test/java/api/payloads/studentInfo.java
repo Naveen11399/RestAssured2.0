@@ -3,7 +3,6 @@ package api.payloads;
 import lombok.Getter;
 import lombok.Setter;
 
-
 public class studentInfo {
 	private String name;
 
@@ -60,6 +59,6 @@ public class studentInfo {
 	}
 
 	private int admissionNumber;
-	
-	private  String studentId;
+
+	private String studentId;
 }
