@@ -126,7 +126,7 @@ public class staffBulkImportTest {
 
 			payload = new StaffCreatePojo();
 
-			payload.setFirstName(faker.name().firstName());
+//			payload.setFirstName(faker.name().firstName());
 
 			Date dob = faker.date().birthday();
 

@@ -4,6 +4,8 @@ import static  io.restassured.RestAssured.given;
 
 import java.io.File;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import api.endPoints.Auth;
 import api.endPoints.Routes;
 import api.marksPayload.MarksPojo;
@@ -78,17 +80,23 @@ public class UploadMarksEndPoints {
 		return response;
 	}
 	
-	public static Response MarkImport(MarksPojo marksPojo) {
-		
-		System.out.println("MarkImportuu  :"+marksPojo);
-		
+	public static Response MarkImport(MarksPojo pojo) throws JsonProcessingException {
+		 
+
+      ObjectMapper mapper = new ObjectMapper();
+      String requestBody = mapper.writeValueAsString(pojo);
+
+// Print the request body
+       System.out.println("Request Body: " + requestBody);
+       
+       
 		Response response= 
 				given()
 				.auth()
 				.oauth2(Auth.getToken())
 				.contentType(ContentType.JSON)
 				.accept(ContentType.ANY)
-				.body(marksPojo.toString())
+				.body(pojo)
 				.when()
 				.post(Routes.BulkMarkImport_URL);
 		

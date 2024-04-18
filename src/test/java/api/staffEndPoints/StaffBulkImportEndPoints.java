@@ -17,9 +17,14 @@ public class StaffBulkImportEndPoints {
 
 		File file = new File(System.getProperty("user.dir") + "\\testdata\\Staff-sample-file (8).xlsx");
 
-		Response response = given().contentType(ContentType.MULTIPART).multiPart("file", file, "application/json")
-				.accept(ContentType.ANY).queryParam("path", "staff-management/imports/").auth().oauth2(Auth.getToken())
-				.when().post(Routes.Upload_FileTeacher_URL);
+		Response response = given()
+				.contentType(ContentType.MULTIPART)
+				.multiPart("file", file, "application/json")
+				.accept(ContentType.ANY)
+				.queryParam("path", "staff-management/imports/")
+				.auth().oauth2(Auth.getToken())
+				.when()
+				.post(Routes.Upload_FileTeacher_URL);
 
 		return response;
 
@@ -27,8 +32,12 @@ public class StaffBulkImportEndPoints {
 
 	public static Response ViewFileTeacher(String fileName, String filePath) {
 
-		Response response = given().auth().oauth2(Auth.getToken()).queryParam("fileName", fileName)
-				.queryParam("filePath", filePath).when().get(Routes.ViewFile_Teacher_URL);
+		Response response = given()
+				.auth().oauth2(Auth.getToken())
+				.queryParam("fileName", fileName)
+				.queryParam("filePath", filePath)
+				.when()
+				.get(Routes.ViewFile_Teacher_URL);
 
 		return response;
 
@@ -36,8 +45,13 @@ public class StaffBulkImportEndPoints {
 
 	public static Response importTeacher(teacherDetails teacherData) {
 
-		Response response = given().auth().oauth2(Auth.getToken()).contentType(ContentType.JSON).accept(ContentType.ANY)
-				.body(teacherData).when().post(Routes.ImportStaff_URL);
+		Response response = given()
+				.auth().oauth2(Auth.getToken())
+				.contentType(ContentType.JSON)
+				.accept(ContentType.ANY)
+				.body(teacherData)
+				.when()
+				.post(Routes.ImportStaff_URL);
 
 		return response;
 
@@ -45,7 +59,10 @@ public class StaffBulkImportEndPoints {
 
 	public static Response getTeacher(Integer staffId) {
 
-		Response response = given().auth().oauth2(Auth.getToken()).pathParam("StaffId", staffId).when()
+		Response response = given()
+				.auth().oauth2(Auth.getToken())
+				.pathParam("StaffId", staffId)
+				.when()
 				.get(Routes.getStaffBulk_URL);
 
 		return response;
@@ -53,8 +70,14 @@ public class StaffBulkImportEndPoints {
 
 	public static Response updateStaff(Integer id, StaffCreatePojo payload) {
 
-		Response response = given().accept("application/json, text/plain, */*").contentType(ContentType.JSON).auth()
-				.oauth2(Auth.getToken()).pathParam("StaffId", id).body(payload).when().put(Routes.UpdateStaffBulk_URL);
+		Response response = given()
+				.accept("application/json, text/plain, */*")
+				.contentType(ContentType.JSON)
+				.auth().oauth2(Auth.getToken())
+				.pathParam("StaffId", id)
+				.body(payload)
+				.when()
+				.put(Routes.UpdateStaffBulk_URL);
 
 		return response;
 

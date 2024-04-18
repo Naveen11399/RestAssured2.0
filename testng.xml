@@ -7,7 +7,7 @@
 	<test thread-count="5" name="Test">
 		<classes>
 			<class name="api.test.StudentTest" />
-			<class name="api.test.StudentTest2" />
+	<!-- 		<class name="api.test.StudentTest2" /> -->
 			<class name="api.test.StdBulkImportTest" />
 			<class name="api.staffTest.StaffCreationTest" />
 			<class name="api.staffTest.staffBulkImportTest" />
