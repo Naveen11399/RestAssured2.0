@@ -62,11 +62,11 @@ public class Routes {
 
 	public static String BulkMarkImport_URL = Base_URL + "/exam-report/bulk-exam-report";
 
-	public static String GetSubjectlist_URL = Base_URL + "/exam-report/exam-report-subject-list?gradeId={{gradeId}}&sectionId={{sectionId}}&examId={{examId}}&type={{type}}";// {userId}
+	public static String GetSubjectlist_URL = Base_URL + "/exam-report/exam-report-subject-list";//?gradeId={{gradeId}}&sectionId={{sectionId}}&examId={{examId}}&type={{type}}";
    
 
-	public static String ExamDetails_URL = Base_URL + "/exam-report/get-exam-report/{{reportId}}";
+	public static String ExamDetails_URL = Base_URL + "/exam-report/get-exam-report/{examId}";
 
-	public static String DeleteMarks_URL = Base_URL + "/exam-report/delete-student-exam-report/{{ExamMarksId}}";// {userId}
+	public static String DeleteMarks_URL = Base_URL + "/exam-report/delete-student-exam-report/{marksId}";// {userId}
 	
 }

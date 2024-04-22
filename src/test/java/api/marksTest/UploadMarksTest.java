@@ -1,6 +1,7 @@
 package api.marksTest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -14,14 +15,12 @@ import com.github.javafaker.Faker;
 
 import api.marksEndPoints.UploadMarksEndPoints;
 import api.marksPayload.MarksPojo;
-import api.marksPayload.ReportDetails;
+
 import io.restassured.response.Response;
 
 public class UploadMarksTest {
 
 	MarksPojo marksPojo;
-
-	ReportDetails report;
 
 	Faker faker;
 
@@ -29,18 +28,16 @@ public class UploadMarksTest {
 	public void GetExam() {
 
 		Response response = UploadMarksEndPoints.GetExam();
-
-		String gradeId = response.jsonPath().getString("data[0].examReport.gradeId");
-		String sectionId = response.jsonPath().getString("data[0].examReport.sectionId");
-		String examId = response.jsonPath().getString("data[0].examReport.examId");
+		
+		String gradeId ="3"; //response.jsonPath().getString("data[0].examReport.gradeId");
+		String sectionId ="1" ;//response.jsonPath().getString("data[0].examReport.sectionId");
+		String examId = "4";//response.jsonPath().getString("data[0].examReport.examId");
 		String type = "2"; // Set the type value manually
 
-//		response.then().log().body();
-
 		marksPojo = new MarksPojo();
-		report = new ReportDetails();
+
 		faker = new Faker();
-		// Assert.assertEquals(200, response.statusCode());
+		Assert.assertEquals(200, response.statusCode());
 
 		marksPojo.setGradeId(gradeId);
 		marksPojo.setSectionId(sectionId);
@@ -54,17 +51,15 @@ public class UploadMarksTest {
 
 		Response response = UploadMarksEndPoints.downloadFile(marksPojo.getGradeId(), marksPojo.getSectionId(),
 				marksPojo.getExamId());
-//		response.then().log().body();
-		// Assert.assertEquals(200, response.statusCode());
+		
+		Assert.assertEquals(200, response.statusCode());
 	}
 
 	@Test(priority = 3)
 	public void uploadMarks() {
 		Response response = UploadMarksEndPoints.UploadMark();
 		Assert.assertEquals(200, response.statusCode());
-
-//		response.then().log().body();
-
+	
 		String filePath = response.jsonPath().getString("data.filePath");
 		String fileName = response.jsonPath().getString("data.fileName");
 
@@ -78,55 +73,92 @@ public class UploadMarksTest {
 
 		Response response = UploadMarksEndPoints.ExcelInfo(marksPojo.getGradeId(), marksPojo.getSectionId(),
 				marksPojo.getFileName(), marksPojo.getFilePath());
-		response.then().log().body();
+		
+		
 
-		// List<MarksPojo.ReportDetail> reportDetails =
-		// response.jsonPath().getList("data.reportDetails",
-		// MarksPojo.ReportDetail.class);
-
-//		ObjectMapper objectMapper = new ObjectMapper();
-//	        List<MarksPojo.ReportDetail> reportDetails = null;
-//	        try {
-//	            MarksPojo.ReportDetail[] reportDetailsArray = objectMapper.readValue(response.jsonPath().getList("data.reportDetails").toString(), MarksPojo.ReportDetail[].class);
-//	            reportDetails = Arrays.asList(reportDetailsArray);
-//	        } catch (IOException e) {
-//	            e.printStackTrace();
-//	        }  
-//		
-
-//		marksPojo.setReportDetails(reportDetails);
-
-		// marksPojo.deserializeReportDetails(response.jsonPath().getString("data.reportDetails"));
-
-		//String reportDetailsJsonString = response.jsonPath().getString("data.reportDetails");
-
-		// report.setReportDetails(reportDetailsJsonString);
-		// marksPojo.setReportDetails(reportDetailsJsonString);
-
-//		ObjectMapper mapper = new ObjectMapper();
-//		ReportDetails[] reportDetails = mapper.readValue(reportDetailsJsonString, ReportDetails[].class);
-
-		// Set the reportDetails in marksPojo
 		Map<String, Object>[] reportDetailsArray = response.jsonPath().getObject("data.reportDetails", Map[].class);
 
-        // Convert the array to a JSON string
-        ObjectMapper objectMapper = new ObjectMapper();
-        String reportDetailsJson = objectMapper.writeValueAsString(reportDetailsArray);
-        String cleanedJsonString = reportDetailsJson.replaceAll("\\\\", "");
-		
-		marksPojo.setReportDetails(cleanedJsonString);
+		marksPojo.setReportDetails(reportDetailsArray);
 
 	}
 
-	@Test(priority = 5, enabled = true)
+	@Test(priority = 5)
 	public void ImportMark() throws JsonProcessingException {
 
 		marksPojo.setTitle(faker.lorem().word());
 
 		Response response = UploadMarksEndPoints.MarkImport(marksPojo);
 
-		response.then().log().body();
+		
 
+		Assert.assertEquals(200, response.statusCode());
+
+		String msg = response.jsonPath().getString("message");
+
+		Assert.assertEquals("Data imported successfully", msg);
+
+	}
+
+	@Test(priority = 6)
+	public void GetSubjectList() {
+
+		Response response = UploadMarksEndPoints.GetSubjectList(marksPojo.getGradeId(), marksPojo.getSectionId(),
+				marksPojo.getExamId(), marksPojo.getType());
+
+//	response.then().log().body();
+
+		Assert.assertEquals(200, response.statusCode());
+
+		List<Integer> examReportId = response.jsonPath().getList("data.examReport.id");
+
+		marksPojo.setExamReportId(examReportId);
+
+		System.out.println("examReportId  :"+examReportId);
+
+	}
+
+	@Test(priority = 7)
+	public void ExamReportDetails() {
+		
+		List<Integer> examMarksId=new ArrayList<>();
+
+		for (Integer examId : marksPojo.getExamReportId()) {
+
+			
+			Response response = UploadMarksEndPoints.ExamReportDetails(examId);
+
+//			response.then().log().body();
+
+			Assert.assertEquals(200, response.statusCode());
+
+			List<Integer> examMarksId1 = response.jsonPath().getList("data.id");
+
+			examMarksId.addAll(examMarksId1);
+		
+		}
+		marksPojo.setExamMarksId(examMarksId);
+
+		System.out.println("examMarksId  :"+examMarksId);
+	}
+	
+	
+	@Test(priority = 8)
+	public void DeleteMarks() {
+
+		for (Integer marksId : marksPojo.getExamMarksId()) {
+			
+			System.out.println(marksId);
+
+			Response response = UploadMarksEndPoints.DeleteMarks(marksId);
+
+			response.then().log().body();
+			
+			Assert.assertEquals(200, response.statusCode());
+
+			String msg = response.jsonPath().getString("message");
+
+			Assert.assertEquals("Student marksheet successfully deleted", msg);
+		}
 	}
 
 }
