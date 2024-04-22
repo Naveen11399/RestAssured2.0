@@ -5,7 +5,7 @@
     <classes>
       <class name="api.marksTest.UploadMarksTest">
         <methods>
-          <include name="ExcelInfoTest"/>
+          <include name="DeleteMarks"/>
         </methods>
       </class> <!-- api.marksTest.UploadMarksTest -->
     </classes>

@@ -4,6 +4,7 @@ import static  io.restassured.RestAssured.given;
 
 import java.io.File;
 
+import com.aventstack.extentreports.gherkin.model.Given;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import api.endPoints.Auth;
@@ -80,6 +81,8 @@ public class UploadMarksEndPoints {
 		return response;
 	}
 	
+	
+	
 	public static Response MarkImport(MarksPojo pojo) throws JsonProcessingException {
 		 
 
@@ -101,6 +104,49 @@ public class UploadMarksEndPoints {
 				.post(Routes.BulkMarkImport_URL);
 		
 		return response;
+	}
+	
+	
+	public static Response GetSubjectList(String gradeId, String sectionId, String examId, String type) {
+		Response response=
+				given()
+				.auth().oauth2(Auth.getToken())
+				.queryParam("gradeId",gradeId )
+				.queryParam("sectionId", sectionId)
+				.queryParam("examId", examId)
+				.queryParam("type", type)
+				.when()
+				.get(Routes.GetSubjectlist_URL);
+		
+		
+		return response;
+		
+	}
+	
+	public static Response ExamReportDetails(Integer examId) {
+		Response response=
+				given()
+				.auth().oauth2(Auth.getToken())
+				.pathParam("examId", examId)
+				.when()
+				.get(Routes.ExamDetails_URL);
+		
+		
+		return response;
+		
+	}
+	
+	public static Response DeleteMarks(Integer marksId) {
+		Response response=
+				given()
+				.auth().oauth2(Auth.getToken())
+				.pathParam("marksId", marksId)
+				.when()
+				.delete(Routes.DeleteMarks_URL);
+		
+		
+		return response;
+		
 	}
 	
 	
